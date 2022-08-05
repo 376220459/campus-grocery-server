@@ -1,3 +1,11 @@
+/*
+ * @Author: Hole 376220459@qq.com
+ * @Date: 2022-08-01 21:29:09
+ * @LastEditors: Hole 376220459@qq.com
+ * @LastEditTime: 2022-08-06 01:14:26
+ * @FilePath: \campus-grocery-server\config\plugin.js
+ * @Description: 插件配置
+ */
 'use strict';
 
 /** @type Egg.EggPlugin */
@@ -6,4 +14,8 @@ module.exports = {
   // static: {
   //   enable: true,
   // }
+  mysql: {
+    enable: true,
+    package: 'egg-mysql',
+  },
 };
