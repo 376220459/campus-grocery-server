@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-06 00:37:07
+ * @LastEditTime: 2022-08-06 17:14:37
  * @FilePath: \campus-grocery-server\config\config.default.js
  * @Description: 配置文件
  */
@@ -43,6 +43,12 @@ module.exports = appInfo => {
       password: '376220459',
       database: 'campus_grocery',
     },
+  };
+
+  config.cors = {
+    origin: '*',
+    credentials: true,
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
 
   // add your user config here
