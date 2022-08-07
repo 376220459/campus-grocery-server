@@ -18,4 +18,6 @@ module.exports = app => {
   // 用户账号相关api
   router.post('/api/register', controller.userAccount.register);
   router.post('/api/login', controller.userAccount.login);
+  router.post('/api/setNewPassword', controller.userAccount.setNewPassword);
+  router.get('/api/checkAuthToken', controller.userAccount.checkAuthToken);
 };

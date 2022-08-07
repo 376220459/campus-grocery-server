@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-06 17:14:37
+ * @LastEditTime: 2022-08-07 22:56:17
  * @FilePath: \campus-grocery-server\config\config.default.js
  * @Description: 配置文件
  */
@@ -50,6 +50,9 @@ module.exports = appInfo => {
     credentials: true,
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH',
   };
+
+  // 登录jwt有效期限，设置为一周
+  config.loginTokenTime = 7 * 24 * 60 * 60 * 1000;
 
   // add your user config here
   const userConfig = {
