@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-07 01:15:46
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-07 15:24:53
+ * @LastEditTime: 2022-08-08 14:35:42
  * @FilePath: \campus-grocery-server\app\extend\helper.js
  * @Description: 扩展helper
  */
@@ -16,7 +16,12 @@ module.exports = {
   // 生成登录jwt
   generateToken(data, exp) {
     const createDate = Date.now();
-    const cert = fs.readFileSync(path.join(__dirname, '../../keys/rsa_private_key.pem'));
+    let cert = '';
+    try {
+      cert = fs.readFileSync(path.join(__dirname, '../../keys/rsa_private_key.pem'));
+    } catch (error) {
+      return this.$error(error);
+    }
     const token = jwt.sign(
       {
         data,
@@ -29,7 +34,7 @@ module.exports = {
   },
 
   // 成功响应
-  $success(message, data = {}) {
+  $success(message = '', data = {}) {
     const { ctx } = this;
     ctx.body = {
       code: 1,
