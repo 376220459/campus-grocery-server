@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-08 13:42:55
+ * @LastEditTime: 2022-08-12 00:19:16
  * @FilePath: \campus-grocery-server\app\router.js
  * @Description: 路由配置
  */
@@ -22,4 +22,5 @@ module.exports = app => {
   router.post('/api/login', controller.userAccount.login);
   router.post('/api/setNewPassword', controller.userAccount.setNewPassword);
   router.get('/api/checkAuthToken', check_auth_token, controller.userAccount.checkAuthToken);
+  router.post('/api/getUploadToken', check_auth_token, controller.qiniu.getUploadToken);
 };

@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-07 01:15:46
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-08 14:35:42
+ * @LastEditTime: 2022-08-12 01:16:33
  * @FilePath: \campus-grocery-server\app\extend\helper.js
  * @Description: 扩展helper
  */
@@ -54,7 +54,7 @@ module.exports = {
   },
 
   // 错误响应
-  $error(error) {
+  $error(error = {}) {
     const { ctx } = this;
     ctx.body = {
       code: 0,
