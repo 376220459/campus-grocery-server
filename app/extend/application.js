@@ -2,17 +2,22 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 01:37:11
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-13 03:43:06
+ * @LastEditTime: 2022-08-13 19:26:01
  * @FilePath: \campus-grocery-server\app\extend\application.js
  * @Description: application 扩展文件
  */
 const _ = require('lodash');
 
+
 // 对象名改为snakeCase模式
 function handlePayload(obj = {}) {
   const o = {};
   Object.keys(obj).forEach(item => {
-    o[_.snakeCase(item)] = obj[item];
+    if ((obj[item] instanceof Object)) {
+      o[_.snakeCase(item)] = JSON.stringify(obj[item]);
+    } else {
+      o[_.snakeCase(item)] = obj[item];
+    }
   });
   return o;
 }
@@ -36,15 +41,5 @@ module.exports = {
   // 数据库查询操作
   async mysqlGet(tableName, condition) {
     return await this.mysql.get(tableName, handlePayload(condition));
-  },
-
-
-  // 对象名改为snakeCase模式
-  handlePayload(obj = {}) {
-    const o = {};
-    Object.keys(obj).forEach(item => {
-      o[_.snakeCase(item)] = obj[item];
-    });
-    return o;
   },
 };
