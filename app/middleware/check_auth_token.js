@@ -29,7 +29,7 @@ module.exports = (options, app) => {
         } catch (error) {
           return ctx.helper.$error(error);
         }
-        if (userLoginStatus.auth_token !== auth_token) {
+        if (userLoginStatus.authToken !== auth_token) {
           return ctx.helper.$warning(5, '您的账号已经在其他地方登录，请重新登录');
         }
 
