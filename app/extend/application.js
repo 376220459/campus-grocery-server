@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 01:37:11
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-17 23:37:03
+ * @LastEditTime: 2022-08-18 21:46:32
  * @FilePath: \campus-grocery-server\app\extend\application.js
  * @Description: application 扩展文件
  */
@@ -71,6 +71,9 @@ module.exports = {
   // 数据库查询操作(查单个数据)
   async mysqlGet(tableName, condition) {
     const res = await this.mysql.get(tableName, toSnakeCase(condition));
+    if (res === null) {
+      return null;
+    }
     return toCamelCase(res);
   },
 
@@ -85,12 +88,15 @@ module.exports = {
       orders,
     });
 
+    if (res === null) {
+      return null;
+    }
     // 注意此处是多条数据（数组），所以要用map处理
     return res.map(item => toCamelCase(item));
   },
 
   // 数据库表记录个数查询操作
-  async mysqlgetCount(tableName, condition = {}) {
+  async mysqlGetCount(tableName, condition = {}) {
     let countArr = [];
     if (_.isEmpty(condition)) {
       countArr = await this.mysql.query(`select count(*) from ${tableName}`);
