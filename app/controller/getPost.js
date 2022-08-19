@@ -20,10 +20,5 @@ class GetPostController extends Controller {
     const { ctx, ctx: { request: { body } } } = this;
     await ctx.service.getPost.getPost(body);
   }
-
-  async getPostInteractive() {
-    const { ctx, ctx: { request: { body } } } = this;
-    await ctx.service.getPost.getPostInteractive(body);
-  }
 }
 module.exports = GetPostController;

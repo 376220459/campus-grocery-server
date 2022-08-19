@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-18 19:55:59
+ * @LastEditTime: 2022-08-20 00:39:15
  * @FilePath: \campus-grocery-server\app\service\getPost.js
  * @Description:  获取帖子（帖子列表）相关service
  */
@@ -29,33 +29,36 @@ class GetPostService extends Service {
     const { ctx, app } = this;
     const { postType, id } = payload;
     try {
-      const postData = await app.mysqlGet(`${postType}_posts`, { id });
+      // 先检查帖子是否存在
+      let postData = await app.mysqlGet(`${postType}_posts`, { id });
       if (postData === null) {
         // 帖子不存在
         return ctx.helper.$warning(2);
       }
-      const { telNumber } = postData;
 
-      // 用户信息
-      const userInfo = await app.mysqlGet('user_info', { telNumber });
+      // 将帖子浏览记录+1
+      const { browseCount } = postData;
+      await app.mysqlUpdate(`${postType}_posts`, { browseCount: browseCount + 1 }, { id });
 
-      ctx.helper.$success('', { postData, userInfo });
+      // 重新获取帖子数据
+      postData = await app.mysqlGet(`${postType}_posts`, { id });
+      ctx.helper.$success('', { postData });
     } catch (error) {
       ctx.helper.$error(error);
     }
   }
 
-  async getPostInteractive(payload) {
+  async getPostInteract(payload) {
     const { ctx, app } = this;
     const { postType, id } = payload;
+    const { telNumber } = ctx.userInfo;
     try {
-
       // 本人是否点赞
-      const support = await app.mysqlGet('support_list', { supportTelNumber: ctx.telNumber, postType, postId: id });
+      const support = await app.mysqlGet('support_list', { supportTelNumber: telNumber, postType, postId: id });
       const isSupport = support !== null;
 
       // 本人是否购买
-      const buy = await app.mysqlGet('buy_list', { buyTelNumber: ctx.telNumber, postType, postId: id });
+      const buy = await app.mysqlGet('buy_list', { buyTelNumber: telNumber, postType, postId: id });
       const isBought = buy !== null;
 
 

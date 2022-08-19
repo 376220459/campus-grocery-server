@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-18 11:18:16
+ * @LastEditTime: 2022-08-19 21:53:16
  * @FilePath: \campus-grocery-server\app\service\userAccount.js
  * @Description: 用户账号相关service
  */
@@ -106,9 +106,10 @@ class UserAccountService extends Service {
   async checkAuthToken() {
     // 次验证在中间件中完成，到达此处已经是验证成功了
     const { ctx, app } = this;
+    const { telNumber } = ctx.userInfo;
 
     try {
-      const userInfo = await app.mysqlGet('user_info', { telNumber: ctx.telNumber });
+      const userInfo = await app.mysqlGet('user_info', { telNumber });
       ctx.helper.$success('', { userInfo });
     } catch (error) {
       return ctx.helper.$error(error);

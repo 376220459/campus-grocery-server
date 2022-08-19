@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-08 12:37:35
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-18 17:08:24
+ * @LastEditTime: 2022-08-19 21:48:47
  * @FilePath: \campus-grocery-server\app\middleware\check_auth_token.js
  * @Description: 验证auth_token中间件
  */
@@ -33,8 +33,9 @@ module.exports = (options, app) => {
           return ctx.helper.$warning(5, '您的账号已经在其他地方登录，请重新登录');
         }
 
-        // 将登录用户的手机号存入ctx中，方便后续接口使用
-        ctx.telNumber = telNumber;
+        // 将登录用户的个人信息存入ctx中，方便后续接口使用
+        const userInfo = await app.mysqlGet('user_info', { telNumber });
+        ctx.userInfo = userInfo;
         await next();
       } else {
         ctx.helper.$warning(3, '您的登录信息不合法，请重新登录');

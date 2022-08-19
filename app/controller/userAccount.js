@@ -4,7 +4,7 @@
  * @LastEditors: Hole 376220459@qq.com
  * @LastEditTime: 2022-08-07 22:53:33
  * @FilePath: \campus-grocery-server\app\controller\userAccount.js
- * @Description: 用户注册接口
+ * @Description: 用户账号相关接口
  */
 'use strict';
 
