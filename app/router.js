@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-19 20:02:05
+ * @LastEditTime: 2022-08-20 17:17:41
  * @FilePath: \campus-grocery-server\app\router.js
  * @Description: 路由配置
  */
@@ -40,6 +40,7 @@ module.exports = app => {
   router.post('/api/cancelSupportPost', check_auth_token, controller.handlePost.cancelSupportPost);
   router.post('/api/buyPost', check_auth_token, controller.handlePost.buyPost);
   router.post('/api/cancelBuyPost', check_auth_token, controller.handlePost.cancelBuyPost);
+  router.post('/api/commentPost', check_auth_token, controller.handlePost.commentPost);
 
   // 帖子互动相关接口
   router.post('/api/getPostInteract', check_auth_token, controller.postInteract.getPostInteract);
@@ -47,5 +48,6 @@ module.exports = app => {
   router.post('/api/getPostSupportList', check_auth_token, controller.postInteract.getPostSupportList);
   router.post('/api/getPostBuyNum', check_auth_token, controller.postInteract.getPostBuyNum);
   router.post('/api/getPostBuyList', check_auth_token, controller.postInteract.getPostBuyList);
-
+  router.post('/api/getPostCommentNum', check_auth_token, controller.postInteract.getPostCommentNum);
+  router.post('/api/getPostCommentList', check_auth_token, controller.postInteract.getPostCommentList);
 };

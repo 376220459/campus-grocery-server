@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-19 22:07:49
+ * @LastEditTime: 2022-08-20 17:09:29
  * @FilePath: \campus-grocery-server\app\service\postInteract.js
  * @Description:  帖子互动信息相关service
  */
@@ -85,6 +85,30 @@ class PostInteractService extends Service {
     try {
       const postBuyList = await app.mysqlSelect('buy_list', pageNum, pageSize, condition);
       ctx.helper.$success('', { postBuyList });
+    } catch (error) {
+      ctx.helper.$error(error);
+    }
+  }
+
+  // 获取帖子评论数
+  async getPostCommentNum(payload) {
+    const { ctx, app } = this;
+    try {
+      const postCommentNum = await app.mysqlGetCount('comment_list', payload);
+      ctx.helper.$success('', { postCommentNum });
+    } catch (error) {
+      ctx.helper.$error(error);
+    }
+  }
+
+  // 获取帖子评论列表
+  async getPostCommentList(payload) {
+    const { ctx, app } = this;
+    const { pageNum, pageSize, postType, postId } = payload;
+    const condition = { postType, postId };
+    try {
+      const postCommentList = await app.mysqlSelect('comment_list', pageNum, pageSize, condition);
+      ctx.helper.$success('', { postCommentList });
     } catch (error) {
       ctx.helper.$error(error);
     }
