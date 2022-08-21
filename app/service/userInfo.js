@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-19 16:35:03
+ * @LastEditTime: 2022-08-21 22:54:55
  * @FilePath: \campus-grocery-server\app\service\userInfo.js
  * @Description: 用户信息相关service
  */
@@ -20,7 +20,7 @@ class UserInfoService extends Service {
       if (userInfo === null) {
         return ctx.helper.$warning(2, '您查寻的用户不存在');
       }
-      ctx.helper.$success('', userInfo);
+      ctx.helper.$success('', { userInfo });
     } catch (error) {
       ctx.helper.$error(error);
     }

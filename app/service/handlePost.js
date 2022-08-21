@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-20 20:22:38
+ * @LastEditTime: 2022-08-21 19:41:41
  * @FilePath: \campus-grocery-server\app\service\handlePost.js
  * @Description:  操作帖子相关service
  */
@@ -15,11 +15,11 @@ class HandlePostService extends Service {
   async supportPost(payload) {
     const { ctx, app } = this;
     const { postType, id, supportTime } = payload;
-    const { telNumber, nickname } = ctx.userInfo;
+    const { telNumber, nickname, head, vip } = ctx.userInfo;
     try {
       const postData = await app.mysqlGet(`${postType}_posts`, { id });
-      const postTelNumber = postData.telNumber;
-      await app.mysqlInsert('support_list', { supportTelNumber: telNumber, supportNickname: nickname, supportTime, postTelNumber, postType, postId: id });
+      const { telNumber: postTelNumber, title: postTitle } = postData;
+      await app.mysqlInsert('support_list', { supportTelNumber: telNumber, supportNickname: nickname, supportHead: head, supportVip: vip, supportTime, postTelNumber, postTitle, postType, postId: id });
       ctx.helper.$success();
     } catch (error) {
       ctx.helper.$error(error);
@@ -43,11 +43,11 @@ class HandlePostService extends Service {
   async buyPost(payload) {
     const { ctx, app } = this;
     const { postType, id, buyTime } = payload;
-    const { telNumber, nickname } = ctx.userInfo;
+    const { telNumber, nickname, head, vip } = ctx.userInfo;
     try {
       const postData = await app.mysqlGet(`${postType}_posts`, { id });
-      const postTelNumber = postData.telNumber;
-      await app.mysqlInsert('buy_list', { buyTelNumber: telNumber, buyNickname: nickname, buyTime, postTelNumber, postType, postId: id });
+      const { telNumber: postTelNumber, title: postTitle } = postData;
+      await app.mysqlInsert('buy_list', { buyTelNumber: telNumber, buyNickname: nickname, buyHead: head, buyVip: vip, buyTime, postTelNumber, postTitle, postType, postId: id });
       ctx.helper.$success();
     } catch (error) {
       ctx.helper.$error(error);
@@ -74,12 +74,8 @@ class HandlePostService extends Service {
     const { telNumber, nickname, head, vip } = ctx.userInfo;
     try {
       const postData = await app.mysqlGet(`${postType}_posts`, { id });
-      const postTelNumber = postData.telNumber;
-      let postRead = 0;
-      if (telNumber === postTelNumber) {
-        postRead = 1;
-      }
-      await app.mysqlInsert('comment_list', { commentTelNumber: telNumber, commentNickname: nickname, commentHead: head, commentVip: vip, commentTime, commentContent, postTelNumber, postType, postId: id, postRead });
+      const { telNumber: postTelNumber, title: postTitle } = postData;
+      await app.mysqlInsert('comment_list', { commentTelNumber: telNumber, commentNickname: nickname, commentHead: head, commentVip: vip, commentTime, commentContent, postTelNumber, postTitle, postType, postId: id });
       ctx.helper.$success('评论成功');
     } catch (error) {
       ctx.helper.$error(error);

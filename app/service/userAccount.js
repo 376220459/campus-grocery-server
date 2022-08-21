@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-20 20:18:03
+ * @LastEditTime: 2022-08-21 20:35:16
  * @FilePath: \campus-grocery-server\app\service\userAccount.js
  * @Description: 用户账号相关service
  */
@@ -110,12 +110,12 @@ class UserAccountService extends Service {
 
     try {
       let userInfo = await app.mysqlGet('user_info', { telNumber });
-      const spportNum = await app.mysqlGetCount('support_list', { postTelNumber: telNumber });
-      const unreadSpportNum = await app.mysqlGetCount('support_list', { postTelNumber: telNumber, postRead: 0 });
+      const supportNum = await app.mysqlGetCount('support_list', { postTelNumber: telNumber });
+      const unreadSupportNum = await app.mysqlGetCount('support_list', { postTelNumber: telNumber, postRead: 0 });
       const unreadCommentNum = await app.mysqlGetCount('comment_list', { postTelNumber: telNumber, postRead: 0 });
       const unreadBuyNum = await app.mysqlGetCount('buy_list', { postTelNumber: telNumber, postRead: 0 });
       const unreadSystemMessageNum = await app.mysqlGetCount('system_message_list', { telNumber, isRead: 0 });
-      userInfo = { ...userInfo, spportNum, unreadSpportNum, unreadCommentNum, unreadBuyNum, unreadSystemMessageNum };
+      userInfo = { ...userInfo, supportNum, unreadSupportNum, unreadCommentNum, unreadBuyNum, unreadSystemMessageNum };
       ctx.helper.$success('', { userInfo });
     } catch (error) {
       return ctx.helper.$error(error);

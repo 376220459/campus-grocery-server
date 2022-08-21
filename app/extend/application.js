@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 01:37:11
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-18 21:46:32
+ * @LastEditTime: 2022-08-21 17:39:38
  * @FilePath: \campus-grocery-server\app\extend\application.js
  * @Description: application 扩展文件
  */
