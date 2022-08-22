@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-21 20:35:16
+ * @LastEditTime: 2022-08-22 21:58:10
  * @FilePath: \campus-grocery-server\app\service\userAccount.js
  * @Description: 用户账号相关service
  */
@@ -114,8 +114,8 @@ class UserAccountService extends Service {
       const unreadSupportNum = await app.mysqlGetCount('support_list', { postTelNumber: telNumber, postRead: 0 });
       const unreadCommentNum = await app.mysqlGetCount('comment_list', { postTelNumber: telNumber, postRead: 0 });
       const unreadBuyNum = await app.mysqlGetCount('buy_list', { postTelNumber: telNumber, postRead: 0 });
-      const unreadSystemMessageNum = await app.mysqlGetCount('system_message_list', { telNumber, isRead: 0 });
-      userInfo = { ...userInfo, supportNum, unreadSupportNum, unreadCommentNum, unreadBuyNum, unreadSystemMessageNum };
+      const unreadSystemNum = await app.mysqlGetCount('system_message_list', { telNumber, isRead: 0 });
+      userInfo = { ...userInfo, supportNum, unreadSupportNum, unreadCommentNum, unreadBuyNum, unreadSystemNum };
       ctx.helper.$success('', { userInfo });
     } catch (error) {
       return ctx.helper.$error(error);

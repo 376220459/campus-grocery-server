@@ -55,7 +55,7 @@ module.exports = app => {
   router.get('/api/getUnreadSupportNum', check_auth_token, controller.userMessage.getUnreadSupportNum);
   router.get('/api/getUnreadCommentNum', check_auth_token, controller.userMessage.getUnreadCommentNum);
   router.get('/api/getUnreadBuyNum', check_auth_token, controller.userMessage.getUnreadBuyNum);
-  router.get('/api/getUnreadSystemMessageNum', check_auth_token, controller.userMessage.getUnreadSystemMessageNum);
+  router.get('/api/getUnreadSystemNum', check_auth_token, controller.userMessage.getUnreadSystemNum);
   router.post('/api/getSupportMessageList', check_auth_token, controller.userMessage.getSupportMessageList);
   router.post('/api/getCommentMessageList', check_auth_token, controller.userMessage.getCommentMessageList);
   router.post('/api/getBuyMessageList', check_auth_token, controller.userMessage.getBuyMessageList);

@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-21 20:12:34
+ * @LastEditTime: 2022-08-22 22:09:23
  * @FilePath: \campus-grocery-server\app\service\userMessage.js
  * @Description:  帖子消息相关service
  */
@@ -48,12 +48,12 @@ class UserMessageService extends Service {
   }
 
   // 获取未读系统消息数
-  async getUnreadSystemMessageNum() {
+  async getUnreadSystemNum() {
     const { ctx, app } = this;
     const { telNumber } = ctx.userInfo;
     try {
-      const unreadSystemMessageNum = app.mysqlGetCount('system_message_list', { telNumber, read: 0 });
-      ctx.helper.$success('', { unreadSystemMessageNum });
+      const unreadSystemNum = await app.mysqlGetCount('system_message_list', { telNumber, isRead: 0 });
+      ctx.helper.$success('', { unreadSystemNum });
     } catch (error) {
       ctx.helper.$error(error);
     }
@@ -113,11 +113,11 @@ class UserMessageService extends Service {
     const { telNumber } = ctx.userInfo;
     const { pageNum, pageSize } = payload;
     try {
-      const systemMessageNum = app.mysqlGetCount('system_message_list', { telNumber });
-      const systemMessageList = app.mysqlSelect('system_message_list', pageNum, pageSize, { telNumber });
-      await app.mysqlUpdate('system_message_list', { read: 1 }, { telNumber, read: 0 });
+      const systemNum = await app.mysqlGetCount('system_message_list', { telNumber });
+      const systemList = await app.mysqlSelect('system_message_list', pageNum, pageSize, { telNumber });
+      await app.mysqlUpdate('system_message_list', { isRead: 1 }, { telNumber, isRead: 0 });
 
-      ctx.helper.$success('', { systemMessageNum, systemMessageList });
+      ctx.helper.$success('', { systemNum, systemList });
     } catch (error) {
       ctx.helper.$error(error);
     }

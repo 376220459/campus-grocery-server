@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:48:52
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-21 18:00:17
+ * @LastEditTime: 2022-08-22 22:07:37
  * @FilePath: \campus-grocery-server\app\controller\userMessage.js
  * @Description: 用户消息相关接口
  */
@@ -26,9 +26,9 @@ class UserMessageController extends Controller {
     await ctx.service.userMessage.getUnreadBuyNum();
   }
 
-  async getUnreadSystemMessageNum() {
+  async getUnreadSystemNum() {
     const { ctx } = this;
-    await ctx.service.userMessage.getUnreadSupportNum();
+    await ctx.service.userMessage.getUnreadSystemNum();
   }
 
   async getSupportMessageList() {
