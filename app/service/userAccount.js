@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-22 21:58:10
+ * @LastEditTime: 2022-08-23 19:23:34
  * @FilePath: \campus-grocery-server\app\service\userAccount.js
  * @Description: 用户账号相关service
  */
@@ -21,6 +21,10 @@ class UserAccountService extends Service {
     try {
       await app.mysqlInsert('user_account', { telNumber, password });
       await app.mysqlInsert('user_info', { telNumber, nickname, school, name, identity, studentNumber, jobNumber });
+
+      // 注册后发送一条系统欢迎消息
+      const currentTime = await app.getCurrentTime();
+      await app.mysqlInsert('system_message_list', { telNumber, time: currentTime, title: '欢迎加入校园杂货铺', content: '欢迎你加入校园你杂货铺，快去发一条帖子，让大家认识你吧~' });
 
       ctx.helper.$success('注册成功');
     } catch (error) {
