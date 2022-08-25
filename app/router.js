@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-21 18:10:09
+ * @LastEditTime: 2022-08-25 22:04:44
  * @FilePath: \campus-grocery-server\app\router.js
  * @Description: 路由配置
  */
@@ -60,4 +60,9 @@ module.exports = app => {
   router.post('/api/getCommentMessageList', check_auth_token, controller.userMessage.getCommentMessageList);
   router.post('/api/getBuyMessageList', check_auth_token, controller.userMessage.getBuyMessageList);
   router.post('/api/getSystemMessageList', check_auth_token, controller.userMessage.getSystemMessageList);
+
+  // 帖子列表相关接口
+  router.post('/api/getPostList2', check_auth_token, controller.handlePostList.getPostList2);
+  router.post('/api/getPostListNum', check_auth_token, controller.handlePostList.getPostListNum);
+
 };
