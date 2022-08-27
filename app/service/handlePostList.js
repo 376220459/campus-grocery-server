@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-25 22:14:07
+ * @LastEditTime: 2022-08-27 16:48:34
  * @FilePath: \campus-grocery-server\app\service\handlePostList.js
  * @Description:  获取帖子（帖子列表）相关service
  */
@@ -13,10 +13,25 @@ const Service = require('egg').Service;
 class HandlePostListService extends Service {
   async getPostList2(payload) {
     const { ctx, app } = this;
-    const { postType, pageNum = 1, pageSize = 0, condition = {} } = payload;
+    const { telNumber } = ctx.userInfo;
+    const { postType, pageNum = 1, pageSize = 0, searchData = '', userPostList = false, condition = {} } = payload;
     const tableName = `${postType}_posts`;
     try {
-      const postList = await app.mysqlSelect(tableName, pageNum, pageSize, condition);
+      let postList = [];
+      let searchPostListNum = 0;
+      let userPostListNum = 0;
+
+      if (userPostList) {
+        postList = await app.mysqlSelect(tableName, pageNum, pageSize, { telNumber });
+        userPostListNum = await app.mysqlGetCount(tableName, { telNumber });
+
+      } else if (searchData) {
+        postList = await app.mysqlSearch(tableName, pageNum, pageSize, { title: searchData });
+        searchPostListNum = await app.mysqlSearchCount(tableName, { title: searchData });
+      } else {
+        postList = await app.mysqlSelect(tableName, pageNum, pageSize, condition);
+      }
+
       const postListHandle = await Promise.all(postList.map(async postData => {
         const { postType, id, telNumber } = postData;
         try {
@@ -43,7 +58,7 @@ class HandlePostListService extends Service {
           ctx.helper.$error(error);
         }
       }));
-      ctx.helper.$success('', { postList: postListHandle });
+      ctx.helper.$success('', { postList: postListHandle, searchPostListNum, userPostListNum });
     } catch (error) {
       ctx.helper.$error(error);
     }

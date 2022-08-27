@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:48:52
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-07 22:53:33
+ * @LastEditTime: 2022-08-27 15:43:21
  * @FilePath: \campus-grocery-server\app\controller\userAccount.js
  * @Description: 用户账号相关接口
  */
@@ -19,6 +19,11 @@ class UserAccountController extends Controller {
   async login() {
     const { ctx, ctx: { request: { body } } } = this;
     await ctx.service.userAccount.login(body);
+  }
+
+  async logout() {
+    const { ctx } = this;
+    await ctx.service.userAccount.logout();
   }
 
   async setNewPassword() {

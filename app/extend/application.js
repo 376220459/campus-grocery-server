@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 01:37:11
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-23 19:13:56
+ * @LastEditTime: 2022-08-27 15:59:29
  * @FilePath: \campus-grocery-server\app\extend\application.js
  * @Description: application 扩展文件
  */
@@ -60,7 +60,8 @@ module.exports = {
 
   // 数据库删除操作
   async mysqlDelete(tableName, condition) {
-    return await this.mysql.delete(tableName, toSnakeCase(condition));
+    const res = await this.mysql.delete(tableName, toSnakeCase(condition));
+    return res.affectedRows;
   },
 
   // 数据库更新操作
@@ -106,6 +107,34 @@ module.exports = {
     return countArr[0]['count(*)'];
   },
 
+  // 数据库模糊查询多条数据
+  async mysqlSearch(tableName, pageNum = 1, pageSize = 10, condition = {}) {
+    const snakeCaseCondition = toSnakeCase(condition);
+    const key = Object.keys(snakeCaseCondition)[0];
+    const value = snakeCaseCondition[key];
+
+    const res = await this.mysql.query(`select * from ${tableName} where ${key} regexp '${value}' limit ${(pageNum - 1) * pageSize}, ${pageNum}`);
+
+    if (res === null) {
+      return null;
+    }
+    // 注意此处是多条数据（数组），所以要用map处理
+    return res.map(item => toCamelCase(item));
+  },
+
+  // 数据库模糊查询多条数据条数
+  async mysqlSearchCount(tableName, condition = {}) {
+    const snakeCaseCondition = toSnakeCase(condition);
+    const key = Object.keys(snakeCaseCondition)[0];
+    const value = snakeCaseCondition[key];
+
+    const countArr = await this.mysql.query(`select count(*) from ${tableName} where ${key} regexp '${value}'`);
+
+    return countArr[0]['count(*)'];
+  },
+
+
+  // 获取当前时间
   getCurrentTime() {
     const now = new Date();
     const year = now.getFullYear();

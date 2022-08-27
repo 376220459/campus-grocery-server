@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-23 19:23:34
+ * @LastEditTime: 2022-08-27 16:02:57
  * @FilePath: \campus-grocery-server\app\service\userAccount.js
  * @Description: 用户账号相关service
  */
@@ -66,6 +66,20 @@ class UserAccountService extends Service {
     }
     return ctx.helper.$warning(4, '此手机号未注册');
   }
+
+  async logout() {
+    const { ctx, app } = this;
+    const { telNumber } = ctx.userInfo;
+
+    try {
+      await app.mysqlDelete('user_login_token', { telNumber });
+
+      return ctx.helper.$success('已退出登录');
+    } catch (error) {
+      return ctx.helper.$error(error);
+    }
+  }
+
 
   async setNewPassword(payload) {
     const { telNumber, password = '', verifCode } = payload;

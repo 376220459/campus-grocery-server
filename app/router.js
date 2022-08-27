@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-25 22:04:44
+ * @LastEditTime: 2022-08-27 17:52:31
  * @FilePath: \campus-grocery-server\app\router.js
  * @Description: 路由配置
  */
@@ -22,6 +22,7 @@ module.exports = app => {
   router.post('/api/login', controller.userAccount.login);
   router.post('/api/setNewPassword', controller.userAccount.setNewPassword);
   router.get('/api/checkAuthToken', check_auth_token, controller.userAccount.checkAuthToken);
+  router.delete('/api/logout', check_auth_token, controller.userAccount.logout);
 
   // 用户信息相关接口
   router.post('/api/getUserInfo', check_auth_token, controller.userInfo.getUserInfo);
@@ -64,5 +65,13 @@ module.exports = app => {
   // 帖子列表相关接口
   router.post('/api/getPostList2', check_auth_token, controller.handlePostList.getPostList2);
   router.post('/api/getPostListNum', check_auth_token, controller.handlePostList.getPostListNum);
+
+  // 用户互动相关接口
+  router.get('/api/getUserSupportNum', check_auth_token, controller.userInteract.getUserSupportNum);
+  router.get('/api/getUserCommentNum', check_auth_token, controller.userInteract.getUserCommentNum);
+  router.get('/api/getUserBuyNum', check_auth_token, controller.userInteract.getUserBuyNum);
+  router.post('/api/getUserSupportList', check_auth_token, controller.userInteract.getUserSupportList);
+  router.post('/api/getUserCommentList', check_auth_token, controller.userInteract.getUserCommentList);
+  router.post('/api/getUserBuyList', check_auth_token, controller.userInteract.getUserBuyList);
 
 };

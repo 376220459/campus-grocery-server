@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-08 12:37:35
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-19 21:48:47
+ * @LastEditTime: 2022-08-27 16:10:50
  * @FilePath: \campus-grocery-server\app\middleware\check_auth_token.js
  * @Description: 验证auth_token中间件
  */
@@ -26,6 +26,9 @@ module.exports = (options, app) => {
         let userLoginStatus = '';
         try {
           userLoginStatus = await app.mysqlGet('user_login_token', { telNumber });
+          if (userLoginStatus === null) {
+            return ctx.helper.$warning(6, '您的账号近期登录异常, 请重新登录');
+          }
         } catch (error) {
           return ctx.helper.$error(error);
         }
