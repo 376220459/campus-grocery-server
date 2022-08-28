@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-27 16:02:57
+ * @LastEditTime: 2022-08-28 16:05:56
  * @FilePath: \campus-grocery-server\app\service\userAccount.js
  * @Description: 用户账号相关service
  */
@@ -109,6 +109,7 @@ class UserAccountService extends Service {
       try {
         if (userAccount.password !== password) {
           await app.mysqlUpdate('user_account', { password }, { telNumber });
+          await app.mysqlDelete('user_login_token', { telNumber });
           return ctx.helper.$success('密码修改成功');
         }
         return ctx.helper.$warning(6, '新密码不可以和旧密码相同');
