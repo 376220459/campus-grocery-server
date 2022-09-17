@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 01:37:11
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-27 15:59:29
+ * @LastEditTime: 2022-09-17 17:24:06
  * @FilePath: \campus-grocery-server\app\extend\application.js
  * @Description: application 扩展文件
  */
@@ -113,11 +113,12 @@ module.exports = {
     const key = Object.keys(snakeCaseCondition)[0];
     const value = snakeCaseCondition[key];
 
-    const res = await this.mysql.query(`select * from ${tableName} where ${key} regexp '${value}' limit ${(pageNum - 1) * pageSize}, ${pageNum}`);
+    const res = await this.mysql.query(`select * from ${tableName} where ${key} regexp '${value}' limit ${(pageNum - 1) * pageSize}, ${pageSize}`);
 
     if (res === null) {
       return null;
     }
+
     // 注意此处是多条数据（数组），所以要用map处理
     return res.map(item => toCamelCase(item));
   },

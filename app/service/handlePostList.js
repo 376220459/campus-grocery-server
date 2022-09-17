@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-13 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-27 16:48:34
+ * @LastEditTime: 2022-09-17 17:22:00
  * @FilePath: \campus-grocery-server\app\service\handlePostList.js
  * @Description:  获取帖子（帖子列表）相关service
  */
@@ -27,6 +27,7 @@ class HandlePostListService extends Service {
 
       } else if (searchData) {
         postList = await app.mysqlSearch(tableName, pageNum, pageSize, { title: searchData });
+
         searchPostListNum = await app.mysqlSearchCount(tableName, { title: searchData });
       } else {
         postList = await app.mysqlSelect(tableName, pageNum, pageSize, condition);
