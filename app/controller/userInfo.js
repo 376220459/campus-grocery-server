@@ -15,5 +15,10 @@ class UserInfoController extends Controller {
     const { ctx, ctx: { request: { body } } } = this;
     await ctx.service.userInfo.getUserInfo(body);
   }
+
+  async setUserInfo() {
+    const { ctx, ctx: { request: { body } } } = this;
+    await ctx.service.userInfo.setUserInfo(body);
+  }
 }
 module.exports = UserInfoController;

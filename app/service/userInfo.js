@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-21 22:54:55
+ * @LastEditTime: 2022-09-17 19:40:09
  * @FilePath: \campus-grocery-server\app\service\userInfo.js
  * @Description: 用户信息相关service
  */
@@ -23,6 +23,18 @@ class UserInfoService extends Service {
       ctx.helper.$success('', { userInfo });
     } catch (error) {
       ctx.helper.$error(error);
+    }
+  }
+
+  async setUserInfo(payload) {
+    const { app, ctx } = this;
+    const { telNumber } = ctx.userInfo;
+
+    try {
+      await app.mysqlUpdate('user_info', payload, { telNumber });
+      return ctx.helper.$success('个人信息已更新');
+    } catch (error) {
+      return ctx.helper.$error(error);
     }
   }
 }

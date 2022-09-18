@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-06 00:51:05
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-13 00:23:41
+ * @LastEditTime: 2022-09-17 19:12:38
  * @FilePath: \campus-grocery-server\app\service\qiniu.js
  * @Description: 七牛云相关service
  */
@@ -52,7 +52,7 @@ class QiniuService extends Service {
         }
       });
     }).then(() => {
-      ctx.helper.$success('图片删除成功');
+      ctx.helper.$success();
     }).catch(() => {
       return ctx.header.$error();
     });

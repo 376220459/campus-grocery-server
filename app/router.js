@@ -2,7 +2,7 @@
  * @Author: Hole 376220459@qq.com
  * @Date: 2022-08-01 21:29:09
  * @LastEditors: Hole 376220459@qq.com
- * @LastEditTime: 2022-08-27 17:52:31
+ * @LastEditTime: 2022-09-17 19:40:58
  * @FilePath: \campus-grocery-server\app\router.js
  * @Description: 路由配置
  */
@@ -26,6 +26,7 @@ module.exports = app => {
 
   // 用户信息相关接口
   router.post('/api/getUserInfo', check_auth_token, controller.userInfo.getUserInfo);
+  router.post('/api/setUserInfo', check_auth_token, controller.userInfo.setUserInfo);
 
   // 七牛云相关接口
   router.post('/api/getUploadToken', check_auth_token, controller.qiniu.getUploadToken);
